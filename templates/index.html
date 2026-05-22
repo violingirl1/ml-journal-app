@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reflection Space</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -98,13 +99,19 @@
             margin-right: 6px;
             margin-top: 6px;
         }
-        /* New History Feed Styles */
         .history-section {
             max-width: 650px;
             width: 100%;
             margin-top: 40px;
         }
         .history-title { font-weight: 600; font-size: 20px; color: #1a1817; margin-bottom: 15px; }
+        .chart-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eae6e1;
+            margin-bottom: 25px;
+        }
         .history-card {
             background: #ffffff;
             padding: 20px;
@@ -150,13 +157,18 @@
 </div>
 
 <div class="history-section">
+    <div class="history-title">Vibe Analytics Dashboard</div>
+    <div class="chart-container" id="chartWrapper" style="display: none;">
+        <canvas id="moodChart"></canvas>
+    </div>
+
     <div class="history-title">Past Reflections</div>
     <div id="historyFeed"></div>
 </div>
 
 <script>
-    // Automatically load the history feed when the webpage opens up
     window.onload = loadHistory;
+    let moodChartInstance = null; // Store chart globally so we can refresh it cleanly
 
     async function loadHistory() {
         const response = await fetch('/api/history');
@@ -166,9 +178,11 @@
 
         if (entries.length === 0) {
             feed.innerHTML = '<p style="color: #8a8480; font-style: italic;">No past reflections yet. Write your first entry above!</p>';
+            document.getElementById('chartWrapper').style.display = 'none';
             return;
         }
 
+        // Render individual history items
         entries.forEach(entry => {
             let tagsHTML = entry.tags.map(t => t ? `<span class="tag">#${t}</span>` : '').join('');
             feed.innerHTML += `
@@ -181,6 +195,38 @@
                     <div style="margin-top: 10px;">${tagsHTML}</div>
                 </div>
             `;
+        });
+
+        // 📊 RENDER CHART DATA (Reverse entries list so chronology moves left-to-right)
+        document.getElementById('chartWrapper').style.display = 'block';
+        const chartData = [...entries].reverse();
+        const dates = chartData.map(e => e.date.substring(5, 16)); // Format timestamp slightly
+        const scores = chartData.map(e => e.score);
+
+        if (moodChartInstance) { moodChartInstance.destroy(); } // Clear old data pointer
+
+        const ctx = document.getElementById('moodChart').getContext('2d');
+        moodChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Sentiment Trend',
+                    data: scores,
+                    borderColor: '#8c857b',
+                    backgroundColor: 'rgba(140, 133, 123, 0.05)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { min: -1, max: 1, grid: { color: '#eae6e1' } },
+                    x: { grid: { display: false } }
+                }
+            }
         });
     }
 
@@ -196,13 +242,11 @@
 
         const data = await response.json();
 
-        // Reveal panel and populate information cleanly
         document.getElementById('insightPanel').style.display = 'block';
         document.getElementById('vibeLabel').innerText = data.mood;
         document.getElementById('metricLabel').innerText = data.score;
         document.getElementById('promptLabel').innerText = data.prompt;
 
-        // Display High/Low Sentence Targets
         const hiBox = document.getElementById('highlightBox');
         if(data.highlight) {
             hiBox.style.display = 'block';
@@ -215,7 +259,6 @@
             loBox.innerHTML = `⛈️ <strong>Emotional Low-point:</strong> "${data.lowlight}"`;
         } else { loBox.style.display = 'none'; }
 
-        // Core Subject Tag Mapping
         const tagBox = document.getElementById('topicsWrapper');
         tagBox.innerHTML = '<strong style="font-size: 14px;">Focused Themes:</strong><br>';
         if(!data.tags || data.tags.length === 0) {
@@ -226,7 +269,6 @@
             });
         }
 
-        // Clear the input textarea and reload history timeline to show the brand new entry!
         document.getElementById('journalText').value = '';
         loadHistory();
     }
