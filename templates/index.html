@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reflection Space</title>
+    <title>guha.ai | Inner Sanctuary</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,12 +11,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            /* --- High-Fidelity Premium Reflection Color System --- */
-            --text-main: #2d2323;         
-            --text-muted: #7d6f6f;        
-            --accent-purple: #7c7fe0;     /* Matches the premium button color in your image */
+            --text-main: #4a3c3c;         
+            --text-title: #362929;        
+            --text-muted: #a69292;        
+            --accent-purple: #7c7fe0;     
             --accent-purple-hover: #676ad0;
-            --border-subtle: rgba(124, 127, 224, 0.12);
+            --border-primary: #f5dfdf;    
+            --accent-pink-soft: #f9d3dd;  
+            --accent-pink-vibrant: #f2a6bb; 
+            --radius-main: 24px;
             
             --font-display: 'Playfair Display', Georgia, serif;
             --font-interface: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -26,7 +29,7 @@
             font-family: var(--font-interface);
             color: var(--text-main);
             margin: 0;
-            padding: 120px 20px 60px 20px; /* Space for the floating top navbar */
+            padding: 130px 20px 60px 20px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -35,16 +38,15 @@
             letter-spacing: -0.01em;
             -webkit-font-smoothing: antialiased;
             
-            /* --- Beautiful Ambient Glow Background from your Screenshot --- */
-            background-color: #faf8f9;
+            /* High-Fidelity Ambient Glow Background */
+            background-color: #fdfafb;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(243, 230, 245, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 10% 20%, rgba(245, 223, 223, 0.5) 0%, transparent 40%),
                 radial-gradient(circle at 90% 10%, rgba(230, 233, 250, 0.6) 0%, transparent 45%),
                 radial-gradient(circle at 50% 80%, rgba(254, 238, 241, 0.5) 0%, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* --- 1. Floating Island Top Navigation Bar --- */
         .floating-navbar {
             position: fixed;
             top: 24px;
@@ -55,21 +57,22 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.6);
             padding: 12px 28px;
-            border-radius: 100px; /* Pill-shaped island */
+            border-radius: 100px; 
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 32px rgba(124, 127, 224, 0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+            box-shadow: 0 12px 35px rgba(242, 166, 187, 0.1), inset 0 1px 0 rgba(255,255,255,0.8);
             z-index: 1000;
             box-sizing: border-box;
         }
 
         .nav-logo {
-            font-family: var(--font-interface);
-            font-weight: 700;
-            font-size: 20px;
-            color: var(--accent-purple);
-            letter-spacing: -0.03em;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-style: italic;
+            font-size: 24px;
+            color: var(--text-title);
+            letter-spacing: -0.02em;
         }
 
         .nav-user {
@@ -80,73 +83,68 @@
 
         .nav-user strong {
             font-family: var(--font-display);
-            color: var(--text-main);
+            color: var(--text-title);
             font-style: italic;
             font-size: 14px;
         }
 
         .logout-btn {
             font-family: var(--font-interface);
-            background-color: var(--accent-purple);
+            background-color: var(--text-title);
             color: #ffffff;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             padding: 10px 22px;
             border-radius: 100px;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 12px rgba(124, 127, 224, 0.2);
+            transition: all 0.2s;
         }
 
         .logout-btn:hover {
-            background-color: var(--accent-purple-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(124, 127, 224, 0.3);
+            background-color: var(--accent-pink-vibrant);
+            transform: translateY(-0.5px);
         }
 
-        /* --- 2. Centered Typography & Workspace Card --- */
         .hero-section {
             text-align: center;
             max-width: 680px;
             width: 100%;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            margin-top: 20px;
+            margin-bottom: 35px;
         }
 
         .hero-section h2 {
             font-family: var(--font-display);
             font-weight: 500;
-            font-size: 46px;
-            color: #161212;
-            margin: 0 0 16px 0;
+            font-size: 42px;
+            color: var(--text-title);
+            margin: 0 0 14px 0;
             letter-spacing: -0.02em;
-            line-height: 1.15;
         }
 
         .hero-section p {
             color: var(--text-muted);
-            font-size: 17px;
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.65;
             margin: 0;
-            font-weight: 400;
         }
 
         .app-card {
             max-width: 720px;
             width: 100%;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 28px;
-            border: 1px solid rgba(124, 127, 224, 0.08);
-            box-shadow: 0 20px 50px rgba(124, 127, 224, 0.03);
+            background: var(--bg-card);
+            padding: 45px;
+            border-radius: var(--radius-main);
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 16px 40px rgba(245, 223, 223, 0.25);
             box-sizing: border-box;
         }
         
         textarea {
             width: 100%;
-            height: 160px;
+            height: 170px;
             padding: 22px;
-            border: 1px solid #ebdada; 
+            border: 1px solid #ebd3d3; 
             border-radius: 20px;
             font-size: 16px;
             line-height: 1.7;
@@ -160,9 +158,9 @@
         }
 
         textarea:focus { 
-            border-color: var(--accent-purple); 
+            border-color: var(--accent-pink-vibrant); 
             background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(124, 127, 224, 0.15); 
+            box-shadow: 0 0 0 4px rgba(242, 166, 187, 0.2); 
         }
         
         .btn-container {
@@ -173,29 +171,29 @@
 
         .submit-btn {
             font-family: var(--font-interface);
-            background-color: var(--accent-purple);
-            color: #ffffff;
+            background-color: var(--accent-pink-soft);
+            color: var(--text-title);
             border: none;
             padding: 14px 32px;
             font-size: 14px;
             font-weight: 600;
-            border-radius: 100px; /* Fully rounded elegant pill button */
+            border-radius: 100px;
             cursor: pointer;
             transition: all 0.25s ease;
-            box-shadow: 0 4px 14px rgba(124, 127, 224, 0.25);
+            box-shadow: 0 4px 12px rgba(249, 211, 221, 0.4);
         }
 
         .submit-btn:hover { 
-            background-color: var(--accent-purple-hover);
+            background-color: var(--accent-pink-vibrant);
+            color: #ffffff;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(124, 127, 224, 0.35);
+            box-shadow: 0 6px 16px rgba(242, 166, 187, 0.4);
         }
         
-        /* --- 3. Insights Display Layout --- */
         .insight-section {
             margin-top: 45px;
             display: none;
-            border-top: 1px dashed rgba(124, 127, 224, 0.15);
+            border-top: 1px dashed var(--border-primary);
             padding-top: 35px;
         }
 
@@ -203,41 +201,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 25px;
         }
 
         .vibe-badge {
             display: inline-block;
-            background: #f1f2fc; 
+            background: #fff5f7; 
             padding: 6px 18px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 13px;
-            color: var(--accent-purple);
-            border: 1px solid rgba(124, 127, 224, 0.2);
+            color: var(--accent-pink-vibrant);
+            border: 1px solid var(--border-primary);
         }
 
         .coach-bubble {
-            background: #fafafdfc;
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(124, 127, 224, 0.1);
-            line-height: 1.7;
+            background: #fffdfd;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 35px;
+            border: 1px solid var(--border-primary);
+            line-height: 1.65;
             color: var(--text-main);
             font-size: 15px;
             font-family: var(--font-display);
             font-style: italic;
-            border-left: 5px solid var(--accent-purple);
+            border-left: 5px solid var(--accent-pink-soft);
         }
 
         .section-title {
             font-family: var(--font-interface);
             font-weight: 700;
-            color: var(--text-main);
+            color: var(--text-title);
             display: block;
             margin-bottom: 18px;
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
@@ -249,10 +247,10 @@
         }
 
         .emotion-row { 
-            background: #faf9fb;
+            background: #fffbfc;
             padding: 16px;
-            border-radius: 16px;
-            border: 1px solid rgba(124, 127, 224, 0.05);
+            border-radius: 14px;
+            border: 1px solid rgba(245, 223, 223, 0.4);
         }
 
         .emotion-labels { 
@@ -266,7 +264,7 @@
 
         .bar-bg { 
             width: 100%; 
-            background: #eeeaf2; 
+            background: #faeff1; 
             height: 7px; 
             border-radius: 10px; 
             overflow: hidden; 
@@ -277,53 +275,52 @@
             width: 0%; 
             transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
             border-radius: 10px; 
-            background-color: var(--accent-purple); 
+            background-color: var(--accent-pink-vibrant); 
         }
         
         .tag { 
             display: inline-block; 
-            background-color: #f6f6fc; 
-            color: var(--accent-purple); 
+            background-color: #fffafb; 
+            color: #d16180; 
             padding: 6px 14px; 
             border-radius: 10px; 
             font-size: 12px; 
             margin-right: 6px; 
             margin-top: 6px;
-            border: 1px solid rgba(124, 127, 224, 0.15);
+            border: 1px solid rgba(242, 166, 187, 0.25);
             font-weight: 600;
         }
 
-        /* --- 4. Analytics Timeline Charts & Ledger --- */
         .history-section { 
             max-width: 720px; 
             width: 100%; 
-            margin-top: 60px; 
+            margin-top: 55px; 
         }
 
         .history-title { 
             font-family: var(--font-display);
             font-weight: 600; 
             font-size: 22px; 
-            color: #161212; 
+            color: var(--text-title); 
             margin-bottom: 20px; 
         }
 
         .chart-container { 
-            background: #ffffff; 
-            padding: 30px; 
-            border-radius: 28px; 
-            border: 1px solid rgba(124, 127, 224, 0.08); 
-            margin-bottom: 45px; 
-            box-shadow: 0 10px 40px rgba(124, 127, 224, 0.02);
+            background: var(--bg-card); 
+            padding: 28px; 
+            border-radius: var(--radius-main); 
+            border: 1px solid var(--border-primary); 
+            margin-bottom: 40px; 
+            box-shadow: 0 8px 30px rgba(245, 223, 223, 0.2);
         }
 
         .history-card { 
-            background: #ffffff; 
-            padding: 32px; 
-            border-radius: 24px; 
-            border: 1px solid rgba(124, 127, 224, 0.06); 
+            background: var(--bg-card); 
+            padding: 30px; 
+            border-radius: var(--radius-main); 
+            border: 1px solid var(--border-primary); 
             margin-bottom: 20px; 
-            box-shadow: 0 4px 20px rgba(124, 127, 224, 0.01);
+            box-shadow: 0 4px 15px rgba(245, 223, 223, 0.1);
         }
 
         .history-meta { 
@@ -331,59 +328,59 @@
             justify-content: space-between; 
             font-size: 12px; 
             color: var(--text-muted); 
-            margin-bottom: 16px; 
+            margin-bottom: 14px; 
             font-weight: 500;
         }
 
         .history-text { 
             font-size: 15px; 
-            line-height: 1.7; 
-            color: #3b3131; 
+            line-height: 1.65; 
+            color: var(--text-main); 
         }
     </style>
 </head>
 <body>
 
 <div class="floating-navbar">
-    <div class="nav-logo">reflection</div>
-    <div class="nav-user">Sanctuary Context / <strong>{{ username }}</strong></div>
+    <div class="nav-logo">guha</div>
+    <div class="nav-user">Inner Sanctuary / <strong>{{ username }}</strong> ✨</div>
     <a href="/logout" class="logout-btn">Disconnect</a>
 </div>
 
 <div class="hero-section">
-    <h2>Journaling Prompts & Guides</h2>
-    <p>Step into your best self with powerful journaling questions to guide your wellness and growth journey.</p>
+    <h2>The Secret Cavern of the Heart</h2>
+    <p>Welcome to guha.ai, a sophisticated, encrypted sanctuary engineered to map your cognitive states and untangle your internal landscape.</p>
 </div>
 
 <div class="app-card">
     <div class="textarea-wrapper">
-        <textarea id="journalText" placeholder="Start typing down your internal landscape..."></textarea>
+        <textarea id="journalText" placeholder="Step inside and start typing down your internal landscape, bud..."></textarea>
     </div>
     
     <div class="btn-container">
-        <button class="submit-btn" onclick="processReflection()">Run Analysis Core ✨</button>
+        <button class="submit-btn" onclick="processReflection()">Gather Insights ✨</button>
     </div>
 
     <div id="insightPanel" class="insight-section">
         <div class="insight-header">
             <span>Dominant Energy Vector: <span class="vibe-badge" id="vibeLabel">Processing...</span></span>
-            <span style="font-size: 13px; color: var(--text-muted);">Composite Delta: <span id="metricLabel" style="font-weight:700; color:var(--accent-purple);">0.0</span></span>
+            <span style="font-size: 13px; color: var(--text-muted);">Composite Delta: <span id="metricLabel" style="font-weight:700; color:var(--accent-pink-vibrant);">0.0</span></span>
         </div>
         
         <div class="coach-bubble">
-            <span class="section-title" style="margin-bottom:6px; color: var(--accent-purple);">Target Clarity Query</span>
+            <span class="section-title" style="margin-bottom:6px; color: var(--accent-pink-vibrant);">A Question For Clarity</span>
             <span id="promptLabel">...</span>
         </div>
 
         <div class="emotion-metric-container">
             <span class="section-title">Spectral Matrix Breakdown</span>
             <div class="emotion-grid">
-                <div class="emotion-row"><div class="emotion-labels"><span>✨ Alignment (Joy)</span><span id="pct-joy">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-joy" style="background:#f4c458;"></div></div></div>
-                <div class="emotion-row"><div class="emotion-labels"><span>❤️ Connection (Love)</span><span id="pct-love">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-love" style="background:#f89494;"></div></div></div>
-                <div class="emotion-row"><div class="emotion-labels"><span>😲 Structural Shift (Surprise)</span><span id="pct-surprise">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-surprise" style="background:#8ecfc4;"></div></div></div>
-                <div class="emotion-row"><div class="emotion-labels"><span>😢 Heavy Processing (Sadness)</span><span id="pct-sadness">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-sadness" style="background:#90b4ca;"></div></div></div>
-                <div class="emotion-row"><div class="emotion-labels"><span>🤬 Friction Point (Anger)</span><span id="pct-anger">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-anger" style="background:#f38d88;"></div></div></div>
-                <div class="emotion-row"><div class="emotion-labels"><span>😨 Vulnerability (Fear)</span><span id="pct-fear">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-fear" style="background:#bfa3f0;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>✨ Alignment (Joy)</span><span id="pct-joy">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-joy" style="background:#f5cb6c;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>❤️ Connection (Love)</span><span id="pct-love">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-love" style="background:#fca6a6;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>😲 Structural Shift (Surprise)</span><span id="pct-surprise">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-surprise" style="background:#9adbd0;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>😢 Heavy Processing (Sadness)</span><span id="pct-sadness">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-sadness" style="background:#9ebecf;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>🤬 Friction Point (Anger)</span><span id="pct-anger">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-anger" style="background:#fa9b96;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>😨 Vulnerability (Fear)</span><span id="pct-fear">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-fear" style="background:#ccaef2;"></div></div></div>
             </div>
         </div>
 
@@ -392,12 +389,12 @@
 </div>
 
 <div class="history-section">
-    <div class="history-title">Delta Index Analytics</div>
+    <div class="history-title">Your Vibe Analytics Timeline</div>
     <div class="chart-container" id="chartWrapper" style="display: none;">
         <canvas id="moodChart" style="max-height: 220px;"></canvas>
     </div>
 
-    <div class="history-title">Chronological Ledger</div>
+    <div class="history-title">Past Reflections Ledger</div>
     <div id="historyFeed"></div>
 </div>
 
@@ -414,7 +411,7 @@
         feed.innerHTML = '';
 
         if (entries.length === 0) {
-            feed.innerHTML = '<p style="color: var(--text-muted); font-style: italic; font-size:14px; text-align:center; padding: 45px 0; font-family: var(--font-display);">No chronological telemetry recorded. Initialize your first log vector above.</p>';
+            feed.innerHTML = '<p style="color: var(--text-muted); font-style: italic; font-size:14px; text-align:center; padding: 40px 0; font-family: var(--font-display);">This space is completely open. Record your first entry above to initialize your timeline vector.</p>';
             document.getElementById('chartWrapper').style.display = 'none';
             return;
         }
@@ -424,8 +421,8 @@
             feed.innerHTML += `
                 <div class="history-card">
                     <div class="history-meta">
-                        <span>Reflected Vector / ${entry.date}</span>
-                        <span style="font-weight:700; color: var(--accent-purple); text-transform: uppercase; font-size:11px; letter-spacing:0.06em;">● ${entry.mood}</span>
+                        <span>Reflected on ${entry.date}</span>
+                        <span style="font-weight:700; color: var(--accent-pink-vibrant); text-transform: uppercase; font-size:11px; letter-spacing:0.06em;">● ${entry.mood}</span>
                     </div>
                     <div class="history-text">${entry.text}</div>
                     <div style="margin-top: 14px;">${tagsHTML}</div>
@@ -445,22 +442,22 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Vibe Matrix',
+                    label: 'Vibe Index Curve',
                     data: scores, 
-                    borderColor: '#7c7fe0', 
-                    backgroundColor: 'rgba(124, 127, 224, 0.04)', 
-                    borderWidth: 2, 
-                    tension: 0.3, 
+                    borderColor: '#f2a6bb', 
+                    backgroundColor: 'rgba(242, 166, 187, 0.08)', 
+                    borderWidth: 2.5, 
+                    tension: 0.35, 
                     fill: true, 
-                    pointBackgroundColor: '#7c7fe0',
-                    pointRadius: 2.5,
+                    pointBackgroundColor: '#fa9b96',
+                    pointRadius: 3,
                 }]
             },
             options: { 
                 responsive: true, 
                 plugins: { legend: { display: false } },
                 scales: { 
-                    y: { min: -1, max: 1, grid: { color: '#f3f0f7' }, ticks: { font: { size: 10, family: "'Plus Jakarta Sans'" } } }, 
+                    y: { min: -1, max: 1, grid: { color: '#fcf0f2' }, ticks: { font: { size: 10, family: "'Plus Jakarta Sans'" } } }, 
                     x: { grid: { display: false }, ticks: { font: { size: 10, family: "'Plus Jakarta Sans'" } } } 
                 } 
             }
@@ -469,7 +466,7 @@
 
     async function processReflection() {
         const text = document.getElementById('journalText').value;
-        if (!text.trim()) return alert("Vector workspace stream is empty, bud.");
+        if (!text.trim()) return alert("Write down your thoughts first, bud.");
 
         const response = await fetch('/api/analyze', {
             method: 'POST',

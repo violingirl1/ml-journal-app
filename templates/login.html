@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome | Reflection Space</title>
+    <title>Welcome to guha.ai</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
             color: var(--text-title); 
             font-weight: 600; 
             margin: 0 0 10px 0; 
-            font-size: 28px;
+            font-size: 32px;
         }
 
         p { 
@@ -130,7 +130,7 @@
 <body>
 
 <div class="login-card">
-    <h2 id="formTitle">Welcome Back</h2>
+    <h2 id="formTitle">Welcome to guha.ai</h2>
     <p id="formSubtitle">Enter your details to step back into clarity.</p>
     
     <input type="text" id="username" placeholder="Username" autocomplete="off">
@@ -140,15 +140,14 @@
     <a href="#" class="btn-secondary" id="toggleBtn" onclick="toggleMode(event)">Create an account</a>
 </div>
 
-<script {
-    // Keep exactly the same JS authentication handling script from earlier copy
+<script>
     let isLoginMode = true;
 
     function toggleMode(e) {
         e.preventDefault();
         isLoginMode = !isLoginMode;
-        document.getElementById('formTitle').innerText = isLoginMode ? "Welcome Back" : "Create Account";
-        document.getElementById('formSubtitle').innerText = isLoginMode ? "Enter your details to step back into clarity." : "Join us to map out your emotional landscape.";
+        document.getElementById('formTitle').innerText = isLoginMode ? "Welcome to guha.ai" : "Create Account";
+        document.getElementById('formSubtitle').innerText = isLoginMode ? "Enter your details to step back into clarity." : "Join guha.ai to map out your emotional landscape.";
         document.getElementById('mainBtn').innerText = isLoginMode ? "Sign In" : "Register Account";
         document.getElementById('toggleBtn').innerText = isLoginMode ? "Create an account" : "Already have an account? Sign In";
         document.getElementById('username').value = '';

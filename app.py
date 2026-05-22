@@ -1,10 +1,17 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from ml_core.analyzer import analyze_journal_entry
 from database import init_db, save_entry, get_user_entries, create_user, verify_user
 
+# 1. Pull keys out of our hidden .env vault
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = "super_secret_pastel_vibe_key" # Needed for cookie session encryption
+
+# 2. Dynamically assign the secret key safely (fallback to a temporary string if .env is missing)
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "temporary_local_fallback_key")
 
 # Configure Flask-Login
 login_manager = LoginManager()
