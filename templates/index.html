@@ -12,7 +12,8 @@
             margin: 0;
             padding: 40px 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
         .app-card {
             max-width: 650px;
@@ -22,12 +23,13 @@
             border-radius: 16px;
             border: 1px solid #eae6e1;
             box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            box-sizing: border-box;
         }
         h1 { font-weight: 600; font-size: 28px; color: #1a1817; margin-bottom: 8px; }
         .subtitle { color: #8a8480; font-size: 15px; margin-top: 0; margin-bottom: 30px; }
         textarea {
             width: 100%;
-            height: 200px;
+            height: 180px;
             padding: 16px;
             border: 1px solid #e2ded9;
             border-radius: 12px;
@@ -96,6 +98,28 @@
             margin-right: 6px;
             margin-top: 6px;
         }
+        /* New History Feed Styles */
+        .history-section {
+            max-width: 650px;
+            width: 100%;
+            margin-top: 40px;
+        }
+        .history-title { font-weight: 600; font-size: 20px; color: #1a1817; margin-bottom: 15px; }
+        .history-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eae6e1;
+            margin-bottom: 15px;
+        }
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8a8480;
+            margin-bottom: 10px;
+        }
+        .history-text { font-size: 15px; line-height: 1.5; color: #2d2a29; }
     </style>
 </head>
 <body>
@@ -125,7 +149,41 @@
     </div>
 </div>
 
+<div class="history-section">
+    <div class="history-title">Past Reflections</div>
+    <div id="historyFeed"></div>
+</div>
+
 <script>
+    // Automatically load the history feed when the webpage opens up
+    window.onload = loadHistory;
+
+    async function loadHistory() {
+        const response = await fetch('/api/history');
+        const entries = await response.json();
+        const feed = document.getElementById('historyFeed');
+        feed.innerHTML = '';
+
+        if (entries.length === 0) {
+            feed.innerHTML = '<p style="color: #8a8480; font-style: italic;">No past reflections yet. Write your first entry above!</p>';
+            return;
+        }
+
+        entries.forEach(entry => {
+            let tagsHTML = entry.tags.map(t => t ? `<span class="tag">#${t}</span>` : '').join('');
+            feed.innerHTML += `
+                <div class="history-card">
+                    <div class="history-meta">
+                        <span>📅 ${entry.date}</span>
+                        <span style="font-weight:600; color:#4a4644;">🧠 ${entry.mood} (${entry.score})</span>
+                    </div>
+                    <div class="history-text">${entry.text}</div>
+                    <div style="margin-top: 10px;">${tagsHTML}</div>
+                </div>
+            `;
+        });
+    }
+
     async function processReflection() {
         const text = document.getElementById('journalText').value;
         if (!text.trim()) return alert("Your space is blank, bud! Write down some thoughts.");
@@ -160,13 +218,17 @@
         // Core Subject Tag Mapping
         const tagBox = document.getElementById('topicsWrapper');
         tagBox.innerHTML = '<strong style="font-size: 14px;">Focused Themes:</strong><br>';
-        if(data.tags.length === 0) {
+        if(!data.tags || data.tags.length === 0) {
             tagBox.innerHTML += '<span class="tag">General Processing</span>';
         } else {
             data.tags.forEach(tag => {
-                tagBox.innerHTML += `<span class="tag">#${tag}</span>`;
+                if(tag.trim()) tagBox.innerHTML += `<span class="tag">#${tag}</span>`;
             });
         }
+
+        // Clear the input textarea and reload history timeline to show the brand new entry!
+        document.getElementById('journalText').value = '';
+        loadHistory();
     }
 </script>
 </body>

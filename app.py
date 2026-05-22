@@ -1,31 +1,38 @@
 from flask import Flask, request, jsonify, render_template
 from ml_core.analyzer import analyze_journal_entry
+# Import our brand new database helper functions
+from database import init_db, save_entry, get_all_entries
 
-# 1. Initialize our Flask Web Application
 app = Flask(__name__)
 
-# 2. Create a basic test route for the main web address
+# Initialize the database table right when the app turns on
+init_db()
+
 @app.route('/')
 def home():
-    # This renders the index.html file we just built inside the templates folder
     return render_template('index.html')
 
-# 3. Create the API endpoint where our frontend will send the journal text
 @app.route('/api/analyze', methods=['POST'])
 def analyze():
     data = request.get_json()
-    
     if not data or 'entry' not in data:
         return jsonify({"error": "No journal entry text provided"}), 400
         
     user_entry = data['entry']
     
-    # 🌟 ADD THIS LINE HERE TO SPY ON THE TEXT:
-    print(f"\n[BACKEND RECEIVING]: {user_entry}\n")
-    
+    # 1. Process the text using our ML script
     ml_results = analyze_journal_entry(user_entry)
+    
+    # 2. Persist the results into our SQLite database so they aren't lost
+    save_entry(user_entry, ml_results['mood'], ml_results['score'], ml_results['tags'])
+    
     return jsonify(ml_results)
 
-# Start the local server on port 5001
+# NEW ROUTE: Lets the frontend fetch the historical timeline of journal reflections
+@app.route('/api/history', methods=['GET'])
+def history():
+    past_entries = get_all_entries()
+    return jsonify(past_entries)
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)
