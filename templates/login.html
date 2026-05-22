@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | Reflection Space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #fefbfc;
+            --bg-card: #ffffff;
+            --border-primary: #f5dfdf;
+            --accent-pink-soft: #f9d3dd;
+            --accent-pink-vibrant: #f2a6bb;
+            
+            --text-main: #544949;
+            --text-title: #362929;
+            --text-muted: #a69292;
+            
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-interface: 'Plus Jakarta Sans', system-ui, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-interface);
+            background: linear-gradient(135deg, var(--bg-body) 0%, #faeef1 100%);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .login-card {
+            background: var(--bg-card); 
+            padding: 50px 45px; 
+            border-radius: 28px; 
+            max-width: 400px; 
+            width: 100%;
+            box-shadow: 0 16px 40px rgba(245, 223, 223, 0.4); 
+            border: 1px solid var(--border-primary); 
+            box-sizing: border-box; 
+            text-align: center;
+        }
+
+        h2 { 
+            font-family: var(--font-display);
+            color: var(--text-title); 
+            font-weight: 600; 
+            margin: 0 0 10px 0; 
+            font-size: 28px;
+        }
+
+        p { 
+            color: var(--text-muted); 
+            font-size: 14px; 
+            margin: 0 0 32px 0; 
+            line-height: 1.6;
+        }
+
+        input {
+            width: 100%; 
+            padding: 16px; 
+            margin-bottom: 16px; 
+            border: 1px solid #ebd3d3; 
+            border-radius: 14px;
+            font-size: 15px; 
+            background: #fffdfd; 
+            box-sizing: border-box; 
+            outline: none; 
+            transition: all 0.25s ease;
+            color: var(--text-main);
+            font-family: var(--font-interface);
+        }
+
+        input:focus { 
+            border-color: var(--accent-pink-vibrant); 
+            background: var(--bg-card); 
+            box-shadow: 0 0 0 4px rgba(242, 166, 187, 0.2); 
+        }
+
+        .btn {
+            font-family: var(--font-interface);
+            width: 100%; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 14px; 
+            font-size: 14px; 
+            font-weight: 600;
+            cursor: pointer; 
+            transition: all 0.25s ease; 
+            margin-top: 6px;
+            box-shadow: 0 4px 12px rgba(249, 211, 221, 0.3);
+        }
+
+        .btn-primary { 
+            background: var(--accent-pink-soft); 
+            color: var(--text-title); 
+        }
+
+        .btn-primary:hover { 
+            background: var(--accent-pink-vibrant); 
+            color: #ffffff;
+            transform: translateY(-0.5px);
+            box-shadow: 0 6px 16px rgba(242, 166, 187, 0.4);
+        }
+
+        .btn-secondary { 
+            background: none; 
+            color: var(--text-muted); 
+            font-size: 13px; 
+            margin-top: 25px; 
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--accent-pink-vibrant);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2 id="formTitle">Welcome Back</h2>
+    <p id="formSubtitle">Enter your details to step back into clarity.</p>
+    
+    <input type="text" id="username" placeholder="Username" autocomplete="off">
+    <input type="password" id="password" placeholder="Password">
+    
+    <button class="btn btn-primary" id="mainBtn" onclick="handleAuth()">Sign In</button>
+    <a href="#" class="btn-secondary" id="toggleBtn" onclick="toggleMode(event)">Create an account</a>
+</div>
+
+<script {
+    // Keep exactly the same JS authentication handling script from earlier copy
+    let isLoginMode = true;
+
+    function toggleMode(e) {
+        e.preventDefault();
+        isLoginMode = !isLoginMode;
+        document.getElementById('formTitle').innerText = isLoginMode ? "Welcome Back" : "Create Account";
+        document.getElementById('formSubtitle').innerText = isLoginMode ? "Enter your details to step back into clarity." : "Join us to map out your emotional landscape.";
+        document.getElementById('mainBtn').innerText = isLoginMode ? "Sign In" : "Register Account";
+        document.getElementById('toggleBtn').innerText = isLoginMode ? "Create an account" : "Already have an account? Sign In";
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+    }
+
+    async function handleAuth() {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value.trim();
+        if(!u || !p) return alert("Fill in the fields, bud!");
+
+        const endpoint = isLoginMode ? '/api/login' : '/api/register';
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: u, password: p })
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+            if (isLoginMode) {
+                window.location.href = '/'; 
+            } else {
+                alert("Registration complete! You can sign in now.");
+                toggleMode({ preventDefault: () => {} });
+            }
+        } else {
+            alert(data.error || "Something went wrong.");
+        }
+    }
+</script>
+</body>
+</html>

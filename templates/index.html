@@ -4,87 +4,366 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reflection Space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --bg-body: #fefbfc;           /* Soft, warm blush cream */
+            --bg-card: #ffffff;           /* Pure white canvas */
+            --border-primary: #f5dfdf;    /* Visible, highly comforting rose border */
+            --accent-pink-soft: #f9d3dd;  /* Soft cozy rose button/badge */
+            --accent-pink-vibrant: #f2a6bb; /* Richer tone for highlights */
+            
+            --text-main: #544949;         /* Warm espresso brown (much softer than black) */
+            --text-title: #362929;        /* Deep cozy mahogany for titles */
+            --text-muted: #a69292;        /* Elegant muted dust rose */
+            --radius-main: 24px;
+            
+            /* Font Definitions */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-interface: 'Plus Jakarta Sans', system-ui, sans-serif;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fcfbfa; color: #2d2a29; margin: 0; padding: 40px 20px;
-            display: flex; flex-direction: column; align-items: center;
+            font-family: var(--font-interface);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
         }
+
+        .header-bar {
+            max-width: 680px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-msg { 
+            font-size: 14px; 
+            color: var(--text-muted); 
+            font-weight: 500; 
+        }
+        
+        .welcome-msg strong {
+            font-family: var(--font-display);
+            color: var(--text-title);
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .logout-lnk { 
+            font-family: var(--font-interface);
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 12px; 
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border-primary);
+            background: var(--bg-card);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(245, 223, 223, 0.2);
+        }
+        .logout-lnk:hover { 
+            border-color: var(--accent-pink-vibrant);
+            color: #ffffff;
+            background: var(--accent-pink-vibrant);
+        }
+        
         .app-card {
-            max-width: 650px; width: 100%; background: #ffffff; padding: 40px;
-            border-radius: 16px; border: 1px solid #eae6e1; box-shadow: 0 4px 20px rgba(0,0,0,0.02); box-sizing: border-box;
+            max-width: 680px;
+            width: 100%;
+            background: var(--bg-card);
+            padding: 45px;
+            border-radius: var(--radius-main);
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 12px 40px rgba(245, 223, 223, 0.3);
+            box-sizing: border-box;
         }
-        h1 { font-weight: 600; font-size: 28px; color: #1a1817; margin-bottom: 8px; }
-        .subtitle { color: #8a8480; font-size: 15px; margin-top: 0; margin-bottom: 30px; }
+
+        h1 { 
+            font-family: var(--font-display);
+            font-weight: 600; 
+            font-size: 32px; 
+            color: var(--text-title); 
+            margin: 0 0 10px 0; 
+            letter-spacing: -0.01em;
+        }
+
+        .subtitle { 
+            color: var(--text-muted); 
+            font-size: 15px; 
+            margin: 0 0 35px 0; 
+            line-height: 1.6;
+        }
+        
         textarea {
-            width: 100%; height: 180px; padding: 16px; border: 1px solid #e2ded9; border-radius: 12px;
-            font-size: 16px; line-height: 1.6; background: #fafaf9; resize: vertical; box-sizing: border-box; outline: none;
+            width: 100%;
+            height: 180px;
+            padding: 22px;
+            border: 1px solid #ebd3d3; 
+            border-radius: 18px;
+            font-size: 16px;
+            line-height: 1.7;
+            background: #fffdfd;
+            resize: vertical;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.25s ease;
+            color: var(--text-main);
+            font-family: var(--font-interface);
+            box-shadow: inset 0 2px 4px rgba(245, 223, 223, 0.1);
         }
+
+        textarea:focus { 
+            border-color: var(--accent-pink-vibrant); 
+            background: var(--bg-card);
+            box-shadow: 0 0 0 4px rgba(242, 166, 187, 0.2); 
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
         button {
-            background-color: #2d2a29; color: #ffffff; border: none; padding: 14px;
-            font-size: 15px; font-weight: 500; border-radius: 12px; cursor: pointer; margin-top: 20px; width: 100%;
+            font-family: var(--font-interface);
+            background-color: var(--accent-pink-soft);
+            color: var(--text-title);
+            border: none;
+            padding: 15px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(249, 211, 221, 0.4);
         }
-        button:hover { background-color: #4a4644; }
-        .insight-section { margin-top: 35px; display: none; border-top: 1px solid #eae6e1; padding-top: 25px; }
-        .vibe-badge { display: inline-block; background: #2d2a29; padding: 6px 14px; border-radius: 30px; font-weight: 600; font-size: 14px; color: #ffffff; }
-        .coach-bubble { background: #f7f5f0; border-radius: 12px; padding: 18px; margin-top: 15px; border-left: 4px solid #8c857b; font-style: italic; line-height: 1.5; }
+
+        button:hover { 
+            background-color: var(--accent-pink-vibrant);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(242, 166, 187, 0.4);
+        }
         
-        /* 📊 Emotion Progress Bar Layout */
-        .emotion-metric-container { margin-top: 25px; }
-        .emotion-row { margin-bottom: 12px; }
-        .emotion-labels { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-        .bar-bg { width: 100%; background: #f1f0ec; height: 8px; border-radius: 10px; overflow: hidden; }
-        .bar-fill { height: 100%; width: 0%; background: #8c857b; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.3, 1); border-radius: 10px; }
+        .insight-section {
+            margin-top: 45px;
+            display: none;
+            border-top: 1px dashed var(--border-primary);
+            padding-top: 35px;
+        }
+
+        .insight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .vibe-badge {
+            display: inline-block;
+            background: #fff5f7; 
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--accent-pink-vibrant);
+            border: 1px solid var(--border-primary);
+        }
+
+        .coach-bubble {
+            background: #fffdfd;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 35px;
+            border: 1px solid var(--border-primary);
+            line-height: 1.65;
+            color: var(--text-main);
+            font-size: 15px;
+            font-family: var(--font-display);
+            font-style: italic;
+            border-left: 5px solid var(--accent-pink-soft);
+        }
+
+        .section-title {
+            font-family: var(--font-interface);
+            font-weight: 700;
+            color: var(--text-title);
+            display: block;
+            margin-bottom: 18px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
         
-        .tag { display: inline-block; background-color: #f1f0ec; color: #615c57; padding: 4px 10px; border-radius: 6px; font-size: 13px; margin-right: 6px; margin-top: 6px; }
-        .history-section { max-width: 650px; width: 100%; margin-top: 40px; }
-        .history-title { font-weight: 600; font-size: 20px; color: #1a1817; margin-bottom: 15px; }
-        .chart-container { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #eae6e1; margin-bottom: 25px; }
-        .history-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #eae6e1; margin-bottom: 15px; }
-        .history-meta { display: flex; justify-content: space-between; font-size: 12px; color: #8a8480; margin-bottom: 10px; }
-        .history-text { font-size: 15px; line-height: 1.5; color: #2d2a29; }
+        .emotion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .emotion-row { 
+            background: #fffbfc;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(245, 223, 223, 0.4);
+        }
+
+        .emotion-labels { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 13px; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: var(--text-main); 
+        }
+
+        .bar-bg { 
+            width: 100%; 
+            background: #faeff1; 
+            height: 8px; 
+            border-radius: 10px; 
+            overflow: hidden; 
+        }
+
+        .bar-fill { 
+            height: 100%; 
+            width: 0%; 
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
+            border-radius: 10px; 
+            background-color: var(--accent-pink-vibrant); 
+        }
+        
+        .tag { 
+            display: inline-block; 
+            background-color: #fffafb; 
+            color: #d16180; 
+            padding: 6px 14px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            margin-right: 6px; 
+            margin-top: 6px;
+            border: 1px solid rgba(242, 166, 187, 0.25);
+            font-weight: 600;
+        }
+
+        .history-section { 
+            max-width: 680px; 
+            width: 100%; 
+            margin-top: 55px; 
+        }
+
+        .history-title { 
+            font-family: var(--font-display);
+            font-weight: 600; 
+            font-size: 20px; 
+            color: var(--text-title); 
+            margin-bottom: 20px; 
+        }
+
+        .chart-container { 
+            background: var(--bg-card); 
+            padding: 28px; 
+            border-radius: var(--radius-main); 
+            border: 1px solid var(--border-primary); 
+            margin-bottom: 40px; 
+            box-shadow: 0 8px 30px rgba(245, 223, 223, 0.2);
+        }
+
+        .history-card { 
+            background: var(--bg-card); 
+            padding: 30px; 
+            border-radius: var(--radius-main); 
+            border: 1px solid var(--border-primary); 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 15px rgba(245, 223, 223, 0.1);
+        }
+
+        .history-meta { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            margin-bottom: 14px; 
+            font-weight: 500;
+        }
+
+        .history-text { 
+            font-size: 15px; 
+            line-height: 1.65; 
+            color: var(--text-main); 
+        }
     </style>
 </head>
 <body>
 
+<div class="header-bar">
+    <span class="welcome-msg">Sanctuary / <strong>{{ username }}</strong> ✨</span>
+    <a href="/logout" class="logout-lnk">Disconnect Space</a>
+</div>
+
 <div class="app-card">
     <h1>Reflection Space</h1>
-    <p class="subtitle">An advanced multi-emotion tracker designed to decrypt your internal landscape.</p>
+    <p class="subtitle">A comforting, secure space to untangle your thoughts and understand your internal world.</p>
     
-    <textarea id="journalText" placeholder="Pour your honest thoughts out... Let's unpack them."></textarea>
-    <button onclick="processReflection()">Reflect & Deepen 🌿</button>
+    <div class="textarea-wrapper">
+        <textarea id="journalText" placeholder="Start writing freely... How is your inner world feeling today, bud?"></textarea>
+    </div>
+    
+    <div class="btn-container">
+        <button onclick="processReflection()">Gather Insights ✨</button>
+    </div>
 
     <div id="insightPanel" class="insight-section">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span>Dominant State: <span class="vibe-badge" id="vibeLabel">Analyzing...</span></span>
-            <span style="font-size: 13px; color: #8a8480;">Composite Vibe: <span id="metricLabel">0.0</span></span>
+        <div class="insight-header">
+            <span>Dominant Energy: <span class="vibe-badge" id="vibeLabel">Processing...</span></span>
+            <span style="font-size: 13px; color: var(--text-muted);">Composite Index: <span id="metricLabel" style="font-weight:700; color:var(--accent-pink-vibrant);">0.0</span></span>
         </div>
         
         <div class="coach-bubble">
-            <strong style="font-style: normal; display: block; margin-bottom: 4px; color: #1a1817;">AI Guided Clarity Prompt:</strong>
+            <span class="section-title" style="margin-bottom:6px; color: var(--accent-pink-vibrant);">A Question For Clarity</span>
             <span id="promptLabel">...</span>
         </div>
 
         <div class="emotion-metric-container">
-            <strong style="font-size: 14px; display:block; margin-bottom:12px;">Emotional Spectrum Breakdown:</strong>
-            <div class="emotion-row"><div class="emotion-labels"><span>✨ Joy / Alignment</span><span id="pct-joy">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-joy" style="background:#e2c044;"></div></div></div>
-            <div class="emotion-row"><div class="emotion-labels"><span>❤️ Love / Connection</span><span id="pct-love">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-love" style="background:#ff9999;"></div></div></div>
-            <div class="emotion-row"><div class="emotion-labels"><span>😲 Surprise / Shift</span><span id="pct-surprise">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-surprise" style="background:#70c1b3;"></div></div></div>
-            <div class="emotion-row"><div class="emotion-labels"><span>😢 Sadness / Processing</span><span id="pct-sadness">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-sadness" style="background:#508aa8;"></div></div></div>
-            <div class="emotion-row"><div class="emotion-labels"><span>🤬 Anger / Friction</span><span id="pct-anger">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-anger" style="background:#f25c54;"></div></div></div>
-            <div class="emotion-row"><div class="emotion-labels"><span>😨 Fear / Vulnerability</span><span id="pct-fear">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-fear" style="background:#9b5de5;"></div></div></div>
+            <span class="section-title">Your Emotional Spectrum</span>
+            <div class="emotion-grid">
+                <div class="emotion-row"><div class="emotion-labels"><span>✨ Joy / Alignment</span><span id="pct-joy">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-joy" style="background:#f5cb6c;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>❤️ Love / Connection</span><span id="pct-love">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-love" style="background:#fca6a6;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>😲 Surprise / Shifts</span><span id="pct-surprise">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-surprise" style="background:#9adbd0;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>😢 Sadness / Processing</span><span id="pct-sadness">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-sadness" style="background:#9ebecf;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>🤬 Anger / Friction</span><span id="pct-anger">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-anger" style="background:#fa9b96;"></div></div></div>
+                <div class="emotion-row"><div class="emotion-labels"><span>😨 Fear / Vulnerability</span><span id="pct-fear">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-fear" style="background:#ccaef2;"></div></div></div>
+            </div>
         </div>
 
-        <div id="topicsWrapper" style="margin-top: 25px;"></div>
+        <div id="topicsWrapper" style="margin-top: 35px;"></div>
     </div>
 </div>
 
 <div class="history-section">
-    <div class="history-title">Vibe Analytics Dashboard</div>
-    <div class="chart-container" id="chartWrapper" style="display: none;"><canvas id="moodChart"></canvas></div>
+    <div class="history-title">Your Vibe Analytics Timeline</div>
+    <div class="chart-container" id="chartWrapper" style="display: none;">
+        <canvas id="moodChart" style="max-height: 220px;"></canvas>
+    </div>
 
-    <div class="history-title">Past Reflections</div>
+    <div class="history-title">Past Reflections Ledger</div>
     <div id="historyFeed"></div>
 </div>
 
@@ -94,25 +373,28 @@
 
     async function loadHistory() {
         const response = await fetch('/api/history');
+        if (response.status === 401) { window.location.href = '/login'; return; }
+        
         const entries = await response.json();
         const feed = document.getElementById('historyFeed');
         feed.innerHTML = '';
 
         if (entries.length === 0) {
+            feed.innerHTML = '<p style="color: var(--text-muted); font-style: italic; font-size:14px; text-align:center; padding: 40px 0; font-family: var(--font-display);">This space is completely open. Record your first entry above to begin your timeline.</p>';
             document.getElementById('chartWrapper').style.display = 'none';
             return;
         }
 
         entries.forEach(entry => {
-            let tagsHTML = entry.tags.map(t => t ? `<span class="tag">#${t}</span>` : '').join('');
+            let tagsHTML = entry.tags.map(t => t ? `<span class="tag">${t}</span>` : '').join('');
             feed.innerHTML += `
                 <div class="history-card">
                     <div class="history-meta">
-                        <span>📅 ${entry.date}</span>
-                        <span style="font-weight:600; color:#4a4644;">🧠 ${entry.mood}</span>
+                        <span>Reflected on ${entry.date}</span>
+                        <span style="font-weight:700; color: var(--accent-pink-vibrant); text-transform: uppercase; font-size:11px; letter-spacing:0.06em;">● ${entry.mood}</span>
                     </div>
                     <div class="history-text">${entry.text}</div>
-                    <div style="margin-top: 10px;">${tagsHTML}</div>
+                    <div style="margin-top: 14px;">${tagsHTML}</div>
                 </div>
             `;
         });
@@ -129,18 +411,31 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Overall Mental Landscape Trend',
-                    data: scores, borderColor: '#2d2a29', backgroundColor: 'rgba(45, 42, 41, 0.03)',
-                    borderWidth: 2, tension: 0.3, fill: true
+                    label: 'Vibe Matrix',
+                    data: scores, 
+                    borderColor: '#f2a6bb', 
+                    backgroundColor: 'rgba(242, 166, 187, 0.08)', 
+                    borderWidth: 2.5, 
+                    tension: 0.35, 
+                    fill: true, 
+                    pointBackgroundColor: '#fa9b96',
+                    pointRadius: 3,
                 }]
             },
-            options: { responsive: true, scales: { y: { min: -1, max: 1 }, x: { grid: { display: false } } } }
+            options: { 
+                responsive: true, 
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { min: -1, max: 1, grid: { color: '#fcf0f2' }, ticks: { font: { size: 10, family: "'Plus Jakarta Sans'" } } }, 
+                    x: { grid: { display: false }, ticks: { font: { size: 10, family: "'Plus Jakarta Sans'" } } } 
+                } 
+            }
         });
     }
 
     async function processReflection() {
         const text = document.getElementById('journalText').value;
-        if (!text.trim()) return alert("Your space is blank, bud! Write down some thoughts.");
+        if (!text.trim()) return alert("Write down your thoughts first, bud.");
 
         const response = await fetch('/api/analyze', {
             method: 'POST',
@@ -155,7 +450,6 @@
         document.getElementById('metricLabel').innerText = data.score;
         document.getElementById('promptLabel').innerText = data.prompt;
 
-        // 📊 Animate the Multi-Emotion Spectrum Bars
         const emoList = ['joy', 'love', 'surprise', 'sadness', 'anger', 'fear'];
         emoList.forEach(emo => {
             const pct = data.emotions[emo] || 0;
@@ -164,7 +458,7 @@
         });
 
         const tagBox = document.getElementById('topicsWrapper');
-        tagBox.innerHTML = '<strong>Themes:</strong><br>';
+        tagBox.innerHTML = '<span class="section-title" style="margin-bottom:8px;">Core Dimensions</span>';
         data.tags.forEach(tag => {
             if(tag.trim()) tagBox.innerHTML += `<span class="tag">#${tag}</span>`;
         });
