@@ -48,13 +48,14 @@ def get_all_entries():
     rows = cursor.fetchall()
     conn.close()
     
-    # Format the raw database rows into a clean list of dictionaries for our API
     entries = []
     for row in rows:
+        # Safeguard: if mood contains details or brackets, keep it clean
+        display_mood = row[2]
         entries.append({
             "date": row[0],
             "text": row[1],
-            "mood": row[2],
+            "mood": display_mood,
             "score": row[3],
             "tags": row[4].split(",") if row[4] else []
         })

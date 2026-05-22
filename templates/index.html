@@ -8,124 +8,41 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fcfbfa;
-            color: #2d2a29;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: #fcfbfa; color: #2d2a29; margin: 0; padding: 40px 20px;
+            display: flex; flex-direction: column; align-items: center;
         }
         .app-card {
-            max-width: 650px;
-            width: 100%;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid #eae6e1;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            box-sizing: border-box;
+            max-width: 650px; width: 100%; background: #ffffff; padding: 40px;
+            border-radius: 16px; border: 1px solid #eae6e1; box-shadow: 0 4px 20px rgba(0,0,0,0.02); box-sizing: border-box;
         }
         h1 { font-weight: 600; font-size: 28px; color: #1a1817; margin-bottom: 8px; }
         .subtitle { color: #8a8480; font-size: 15px; margin-top: 0; margin-bottom: 30px; }
         textarea {
-            width: 100%;
-            height: 180px;
-            padding: 16px;
-            border: 1px solid #e2ded9;
-            border-radius: 12px;
-            font-size: 16px;
-            line-height: 1.6;
-            background: #fafaf9;
-            resize: vertical;
-            box-sizing: border-box;
-            outline: none;
-            transition: border 0.2s;
+            width: 100%; height: 180px; padding: 16px; border: 1px solid #e2ded9; border-radius: 12px;
+            font-size: 16px; line-height: 1.6; background: #fafaf9; resize: vertical; box-sizing: border-box; outline: none;
         }
-        textarea:focus { border-color: #a39e93; background: #ffffff; }
         button {
-            background-color: #2d2a29;
-            color: #ffffff;
-            border: none;
-            padding: 14px;
-            font-size: 15px;
-            font-weight: 500;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-            transition: background 0.2s;
+            background-color: #2d2a29; color: #ffffff; border: none; padding: 14px;
+            font-size: 15px; font-weight: 500; border-radius: 12px; cursor: pointer; margin-top: 20px; width: 100%;
         }
         button:hover { background-color: #4a4644; }
-        .insight-section {
-            margin-top: 35px;
-            display: none;
-            border-top: 1px solid #eae6e1;
-            padding-top: 25px;
-        }
-        .vibe-badge {
-            display: inline-block;
-            background: #f1f0ec;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #4a4644;
-        }
-        .coach-bubble {
-            background: #f7f5f0;
-            border-radius: 12px;
-            padding: 18px;
-            margin-top: 15px;
-            border-left: 4px solid #8c857b;
-            font-style: italic;
-            line-height: 1.5;
-        }
-        .highlight-chip {
-            margin-top: 15px;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 8px;
-            background: #fcfcfc;
-            border: 1px dashed #e2ded9;
-        }
-        .tag {
-            display: inline-block;
-            background-color: #f1f0ec;
-            color: #615c57;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            margin-right: 6px;
-            margin-top: 6px;
-        }
-        .history-section {
-            max-width: 650px;
-            width: 100%;
-            margin-top: 40px;
-        }
+        .insight-section { margin-top: 35px; display: none; border-top: 1px solid #eae6e1; padding-top: 25px; }
+        .vibe-badge { display: inline-block; background: #2d2a29; padding: 6px 14px; border-radius: 30px; font-weight: 600; font-size: 14px; color: #ffffff; }
+        .coach-bubble { background: #f7f5f0; border-radius: 12px; padding: 18px; margin-top: 15px; border-left: 4px solid #8c857b; font-style: italic; line-height: 1.5; }
+        
+        /* 📊 Emotion Progress Bar Layout */
+        .emotion-metric-container { margin-top: 25px; }
+        .emotion-row { margin-bottom: 12px; }
+        .emotion-labels { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+        .bar-bg { width: 100%; background: #f1f0ec; height: 8px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; background: #8c857b; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.3, 1); border-radius: 10px; }
+        
+        .tag { display: inline-block; background-color: #f1f0ec; color: #615c57; padding: 4px 10px; border-radius: 6px; font-size: 13px; margin-right: 6px; margin-top: 6px; }
+        .history-section { max-width: 650px; width: 100%; margin-top: 40px; }
         .history-title { font-weight: 600; font-size: 20px; color: #1a1817; margin-bottom: 15px; }
-        .chart-container {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #eae6e1;
-            margin-bottom: 25px;
-        }
-        .history-card {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #eae6e1;
-            margin-bottom: 15px;
-        }
-        .history-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #8a8480;
-            margin-bottom: 10px;
-        }
+        .chart-container { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #eae6e1; margin-bottom: 25px; }
+        .history-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #eae6e1; margin-bottom: 15px; }
+        .history-meta { display: flex; justify-content: space-between; font-size: 12px; color: #8a8480; margin-bottom: 10px; }
         .history-text { font-size: 15px; line-height: 1.5; color: #2d2a29; }
     </style>
 </head>
@@ -133,15 +50,15 @@
 
 <div class="app-card">
     <h1>Reflection Space</h1>
-    <p class="subtitle">A mindful space designed to process your internal landscape.</p>
+    <p class="subtitle">An advanced multi-emotion tracker designed to decrypt your internal landscape.</p>
     
-    <textarea id="journalText" placeholder="Start typing your thoughts freely..."></textarea>
+    <textarea id="journalText" placeholder="Pour your honest thoughts out... Let's unpack them."></textarea>
     <button onclick="processReflection()">Reflect & Deepen 🌿</button>
 
     <div id="insightPanel" class="insight-section">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="vibe-badge" id="vibeLabel">Analyzing...</span>
-            <span style="font-size: 13px; color: #8a8480;">Metric Score: <span id="metricLabel">0.0</span></span>
+            <span>Dominant State: <span class="vibe-badge" id="vibeLabel">Analyzing...</span></span>
+            <span style="font-size: 13px; color: #8a8480;">Composite Vibe: <span id="metricLabel">0.0</span></span>
         </div>
         
         <div class="coach-bubble">
@@ -149,18 +66,23 @@
             <span id="promptLabel">...</span>
         </div>
 
-        <div id="highlightBox" class="highlight-chip" style="display:none;"></div>
-        <div id="lowlightBox" class="highlight-chip" style="display:none; border-color: #f2dede;"></div>
+        <div class="emotion-metric-container">
+            <strong style="font-size: 14px; display:block; margin-bottom:12px;">Emotional Spectrum Breakdown:</strong>
+            <div class="emotion-row"><div class="emotion-labels"><span>✨ Joy / Alignment</span><span id="pct-joy">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-joy" style="background:#e2c044;"></div></div></div>
+            <div class="emotion-row"><div class="emotion-labels"><span>❤️ Love / Connection</span><span id="pct-love">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-love" style="background:#ff9999;"></div></div></div>
+            <div class="emotion-row"><div class="emotion-labels"><span>😲 Surprise / Shift</span><span id="pct-surprise">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-surprise" style="background:#70c1b3;"></div></div></div>
+            <div class="emotion-row"><div class="emotion-labels"><span>😢 Sadness / Processing</span><span id="pct-sadness">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-sadness" style="background:#508aa8;"></div></div></div>
+            <div class="emotion-row"><div class="emotion-labels"><span>🤬 Anger / Friction</span><span id="pct-anger">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-anger" style="background:#f25c54;"></div></div></div>
+            <div class="emotion-row"><div class="emotion-labels"><span>😨 Fear / Vulnerability</span><span id="pct-fear">0%</span></div><div class="bar-bg"><div class="bar-fill" id="bar-fear" style="background:#9b5de5;"></div></div></div>
+        </div>
 
-        <div id="topicsWrapper" style="margin-top: 20px;"></div>
+        <div id="topicsWrapper" style="margin-top: 25px;"></div>
     </div>
 </div>
 
 <div class="history-section">
     <div class="history-title">Vibe Analytics Dashboard</div>
-    <div class="chart-container" id="chartWrapper" style="display: none;">
-        <canvas id="moodChart"></canvas>
-    </div>
+    <div class="chart-container" id="chartWrapper" style="display: none;"><canvas id="moodChart"></canvas></div>
 
     <div class="history-title">Past Reflections</div>
     <div id="historyFeed"></div>
@@ -168,7 +90,7 @@
 
 <script>
     window.onload = loadHistory;
-    let moodChartInstance = null; // Store chart globally so we can refresh it cleanly
+    let moodChartInstance = null;
 
     async function loadHistory() {
         const response = await fetch('/api/history');
@@ -177,19 +99,17 @@
         feed.innerHTML = '';
 
         if (entries.length === 0) {
-            feed.innerHTML = '<p style="color: #8a8480; font-style: italic;">No past reflections yet. Write your first entry above!</p>';
             document.getElementById('chartWrapper').style.display = 'none';
             return;
         }
 
-        // Render individual history items
         entries.forEach(entry => {
             let tagsHTML = entry.tags.map(t => t ? `<span class="tag">#${t}</span>` : '').join('');
             feed.innerHTML += `
                 <div class="history-card">
                     <div class="history-meta">
                         <span>📅 ${entry.date}</span>
-                        <span style="font-weight:600; color:#4a4644;">🧠 ${entry.mood} (${entry.score})</span>
+                        <span style="font-weight:600; color:#4a4644;">🧠 ${entry.mood}</span>
                     </div>
                     <div class="history-text">${entry.text}</div>
                     <div style="margin-top: 10px;">${tagsHTML}</div>
@@ -197,36 +117,24 @@
             `;
         });
 
-        // 📊 RENDER CHART DATA (Reverse entries list so chronology moves left-to-right)
         document.getElementById('chartWrapper').style.display = 'block';
         const chartData = [...entries].reverse();
-        const dates = chartData.map(e => e.date.substring(5, 16)); // Format timestamp slightly
+        const dates = chartData.map(e => e.date.substring(5, 16));
         const scores = chartData.map(e => e.score);
 
-        if (moodChartInstance) { moodChartInstance.destroy(); } // Clear old data pointer
-
+        if (moodChartInstance) { moodChartInstance.destroy(); }
         const ctx = document.getElementById('moodChart').getContext('2d');
         moodChartInstance = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Sentiment Trend',
-                    data: scores,
-                    borderColor: '#8c857b',
-                    backgroundColor: 'rgba(140, 133, 123, 0.05)',
-                    borderWidth: 2,
-                    tension: 0.3,
-                    fill: true
+                    label: 'Overall Mental Landscape Trend',
+                    data: scores, borderColor: '#2d2a29', backgroundColor: 'rgba(45, 42, 41, 0.03)',
+                    borderWidth: 2, tension: 0.3, fill: true
                 }]
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { min: -1, max: 1, grid: { color: '#eae6e1' } },
-                    x: { grid: { display: false } }
-                }
-            }
+            options: { responsive: true, scales: { y: { min: -1, max: 1 }, x: { grid: { display: false } } } }
         });
     }
 
@@ -247,27 +155,19 @@
         document.getElementById('metricLabel').innerText = data.score;
         document.getElementById('promptLabel').innerText = data.prompt;
 
-        const hiBox = document.getElementById('highlightBox');
-        if(data.highlight) {
-            hiBox.style.display = 'block';
-            hiBox.innerHTML = `☀️ <strong>Emotional High-point:</strong> "${data.highlight}"`;
-        } else { hiBox.style.display = 'none'; }
-
-        const loBox = document.getElementById('lowlightBox');
-        if(data.lowlight) {
-            loBox.style.display = 'block';
-            loBox.innerHTML = `⛈️ <strong>Emotional Low-point:</strong> "${data.lowlight}"`;
-        } else { loBox.style.display = 'none'; }
+        // 📊 Animate the Multi-Emotion Spectrum Bars
+        const emoList = ['joy', 'love', 'surprise', 'sadness', 'anger', 'fear'];
+        emoList.forEach(emo => {
+            const pct = data.emotions[emo] || 0;
+            document.getElementById(`pct-${emo}`).innerText = pct + '%';
+            document.getElementById(`bar-${emo}`).style.width = pct + '%';
+        });
 
         const tagBox = document.getElementById('topicsWrapper');
-        tagBox.innerHTML = '<strong style="font-size: 14px;">Focused Themes:</strong><br>';
-        if(!data.tags || data.tags.length === 0) {
-            tagBox.innerHTML += '<span class="tag">General Processing</span>';
-        } else {
-            data.tags.forEach(tag => {
-                if(tag.trim()) tagBox.innerHTML += `<span class="tag">#${tag}</span>`;
-            });
-        }
+        tagBox.innerHTML = '<strong>Themes:</strong><br>';
+        data.tags.forEach(tag => {
+            if(tag.trim()) tagBox.innerHTML += `<span class="tag">#${tag}</span>`;
+        });
 
         document.getElementById('journalText').value = '';
         loadHistory();
