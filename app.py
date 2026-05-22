@@ -20,9 +20,10 @@ def analyze():
         
     user_entry = data['entry']
     
-    # Pass the text over to our Phase 2 ML core to crunch the numbers
-    ml_results = analyze_journal_entry(user_entry)
+    # 🌟 ADD THIS LINE HERE TO SPY ON THE TEXT:
+    print(f"\n[BACKEND RECEIVING]: {user_entry}\n")
     
+    ml_results = analyze_journal_entry(user_entry)
     return jsonify(ml_results)
 
 # Start the local server on port 5001

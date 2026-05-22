@@ -3,114 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Mindful Journal</title>
+    <title>Reflection Space</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fcfbfa;
+            color: #2d2a29;
             margin: 0;
-            padding: 40px;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
         }
-        .container {
-            max-width: 600px;
+        .app-card {
+            max-width: 650px;
             width: 100%;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #eae6e1;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
         }
-        h1 { color: #2c3e50; margin-bottom: 5px; }
-        p.subtitle { color: #7f8c8d; margin-top: 0; margin-bottom: 25px; }
+        h1 { font-weight: 600; font-size: 28px; color: #1a1817; margin-bottom: 8px; }
+        .subtitle { color: #8a8480; font-size: 15px; margin-top: 0; margin-bottom: 30px; }
         textarea {
             width: 100%;
-            height: 150px;
-            padding: 12px;
-            border: 1px solid #dcdde1;
-            border-radius: 8px;
+            height: 200px;
+            padding: 16px;
+            border: 1px solid #e2ded9;
+            border-radius: 12px;
             font-size: 16px;
+            line-height: 1.6;
+            background: #fafaf9;
             resize: vertical;
             box-sizing: border-box;
+            outline: none;
+            transition: border 0.2s;
         }
+        textarea:focus { border-color: #a39e93; background: #ffffff; }
         button {
-            background-color: #3498db;
-            color: white;
+            background-color: #2d2a29;
+            color: #ffffff;
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 8px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
             width: 100%;
             transition: background 0.2s;
         }
-        button:hover { background-color: #2980b9; }
-        .results-box {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-left: 5px solid #3498db;
-            border-radius: 4px;
+        button:hover { background-color: #4a4644; }
+        .insight-section {
+            margin-top: 35px;
             display: none;
+            border-top: 1px solid #eae6e1;
+            padding-top: 25px;
+        }
+        .vibe-badge {
+            display: inline-block;
+            background: #f1f0ec;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #4a4644;
+        }
+        .coach-bubble {
+            background: #f7f5f0;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 15px;
+            border-left: 4px solid #8c857b;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        .highlight-chip {
+            margin-top: 15px;
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fcfcfc;
+            border: 1px dashed #e2ded9;
         }
         .tag {
             display: inline-block;
-            background-color: #e1f5fe;
-            color: #0288d1;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-right: 5px;
-            margin-top: 5px;
+            background-color: #f1f0ec;
+            color: #615c57;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-right: 6px;
+            margin-top: 6px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Mindful ML Journal</h1>
-    <p class="subtitle">Write your thoughts and let NLP analyze your emotional vibe.</p>
+<div class="app-card">
+    <h1>Reflection Space</h1>
+    <p class="subtitle">A mindful space designed to process your internal landscape.</p>
     
-    <textarea id="journalEntry" placeholder="How was your day? Pour your heart out..."></textarea>
-    <button onclick="analyzeEntry()">Analyze Vibe 🧠</button>
+    <textarea id="journalText" placeholder="Start typing your thoughts freely..."></textarea>
+    <button onclick="processReflection()">Reflect & Deepen 🌿</button>
 
-    <div id="results" class="results-box">
-        <h3>Analysis Results:</h3>
-        <p><strong>Vibe Check:</strong> <span id="moodResult"></span></p>
-        <p><strong>Sentiment Score:</strong> <span id="scoreResult"></span></p>
-        <div id="tagsContainer"></div>
+    <div id="insightPanel" class="insight-section">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="vibe-badge" id="vibeLabel">Analyzing...</span>
+            <span style="font-size: 13px; color: #8a8480;">Metric Score: <span id="metricLabel">0.0</span></span>
+        </div>
+        
+        <div class="coach-bubble">
+            <strong style="font-style: normal; display: block; margin-bottom: 4px; color: #1a1817;">AI Guided Clarity Prompt:</strong>
+            <span id="promptLabel">...</span>
+        </div>
+
+        <div id="highlightBox" class="highlight-chip" style="display:none;"></div>
+        <div id="lowlightBox" class="highlight-chip" style="display:none; border-color: #f2dede;"></div>
+
+        <div id="topicsWrapper" style="margin-top: 20px;"></div>
     </div>
 </div>
 
 <script>
-    async function analyzeEntry() {
-        const text = document.getElementById('journalEntry').value;
-        if (!text.trim()) return alert("Write something first, bud!");
+    async function processReflection() {
+        const text = document.getElementById('journalText').value;
+        if (!text.trim()) return alert("Your space is blank, bud! Write down some thoughts.");
 
-        // Connect to our Flask API endpoint
         const response = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            document: JSON.stringify({ entry: text })
+            body: JSON.stringify({ entry: text })
         });
 
         const data = await response.json();
 
-        // Update the interface dynamically with ML results
-        document.getElementById('results').style.display = 'block';
-        document.getElementById('moodResult').innerText = data.mood;
-        document.getElementById('scoreResult').innerText = data.score;
+        // Reveal panel and populate information cleanly
+        document.getElementById('insightPanel').style.display = 'block';
+        document.getElementById('vibeLabel').innerText = data.mood;
+        document.getElementById('metricLabel').innerText = data.score;
+        document.getElementById('promptLabel').innerText = data.prompt;
 
-        // Clear and render the extracted keyword tags
-        const tagsContainer = document.getElementById('tagsContainer');
-        tagsContainer.innerHTML = '<strong>Key Topics:</strong><br>';
-        if (data.tags.length === 0) {
-            tagsContainer.innerHTML += '<span class="tag">No major tags found</span>';
+        // Display High/Low Sentence Targets
+        const hiBox = document.getElementById('highlightBox');
+        if(data.highlight) {
+            hiBox.style.display = 'block';
+            hiBox.innerHTML = `☀️ <strong>Emotional High-point:</strong> "${data.highlight}"`;
+        } else { hiBox.style.display = 'none'; }
+
+        const loBox = document.getElementById('lowlightBox');
+        if(data.lowlight) {
+            loBox.style.display = 'block';
+            loBox.innerHTML = `⛈️ <strong>Emotional Low-point:</strong> "${data.lowlight}"`;
+        } else { loBox.style.display = 'none'; }
+
+        // Core Subject Tag Mapping
+        const tagBox = document.getElementById('topicsWrapper');
+        tagBox.innerHTML = '<strong style="font-size: 14px;">Focused Themes:</strong><br>';
+        if(data.tags.length === 0) {
+            tagBox.innerHTML += '<span class="tag">General Processing</span>';
         } else {
             data.tags.forEach(tag => {
-                tagsContainer.innerHTML += `<span class="tag">${tag}</span>`;
+                tagBox.innerHTML += `<span class="tag">#${tag}</span>`;
             });
         }
     }
